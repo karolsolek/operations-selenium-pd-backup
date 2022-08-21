@@ -5,14 +5,19 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 class ExportPage:
+    #region Selectors
     iframe_selector = "//iframe[@id='iFrameResizer0']"
     data_type_buttons_selector = "//label[@class='fancy_radio inline']"
     csv_button_selector = "//button[@id='do-export-csv']"
+    file_list_selector = "//table[@id='exports_list']//tr"
+    spiner_selector = "//span[@class='spinner']"
+    #endregion
 
     def __init__(self, browser):
         self.browser = browser
         self.wait = WebDriverWait(browser,360)
 
+    #region Functions
     def export_data(self):
         self.browser.get('https://lexmotion.pipedrive.com/settings/export')
         time.sleep(4)
@@ -21,13 +26,13 @@ class ExportPage:
 
     def build_url(self):
         time.sleep(4)
-        all_files = self.browser.find_elements(By.XPATH, "//table[@id='exports_list']//tr")
+        all_files = self.browser.find_elements(By.XPATH, ExportPage.file_list_selector)
         last_record = all_files.pop()
         last_record_number = last_record.text
         return "https://lexmotion.pipedrive.com/export/download/" + last_record_number[0:3]
 
     def export_data_file(self):
-        self.wait.until(EC.invisibility_of_element((By.XPATH, "//span[@class='spinner']")))
+        self.wait.until(EC.invisibility_of_element((By.XPATH, ExportPage.spiner_selector)))
         self.browser.get(self.build_url())
 
     def export_leads(self):
@@ -88,3 +93,6 @@ class ExportPage:
         csv_button = self.browser.find_element(By.XPATH, ExportPage.csv_button_selector)
         csv_button.click()
         self.export_data_file()
+        time.sleep(60)
+    #endregion
+
