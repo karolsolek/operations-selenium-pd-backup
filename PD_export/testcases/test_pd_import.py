@@ -13,7 +13,7 @@ class TestDemoName:
         time.sleep(4)
         ep.export_data()
         ep.export_leads()
-       # ep.export_deals()
+        ep.export_deals()
         ep.export_organizations()
         ep.export_people()
         ep.export_products()
