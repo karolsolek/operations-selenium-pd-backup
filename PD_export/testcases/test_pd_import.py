@@ -13,12 +13,10 @@ class TestDemoName:
         time.sleep(4)
         ep.export_data()
         ep.export_leads()
-        ep.export_deals()
+       # ep.export_deals()
         ep.export_organizations()
         ep.export_people()
         ep.export_products()
         ep.export_activities()
         ep.export_notes()
 
-        ep.export_data_file()
-        time.sleep(10)
