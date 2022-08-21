@@ -1,5 +1,7 @@
-from selenium.webdriver.common.by import By
 import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class ExportPage:
@@ -9,6 +11,7 @@ class ExportPage:
 
     def __init__(self, browser):
         self.browser = browser
+        self.wait = WebDriverWait(browser,360)
 
     def export_data(self):
         self.browser.get('https://lexmotion.pipedrive.com/settings/export')
@@ -24,7 +27,7 @@ class ExportPage:
         return "https://lexmotion.pipedrive.com/export/download/" + last_record_number[0:3]
 
     def export_data_file(self):
-        time.sleep(2)
+        self.wait.until(EC.invisibility_of_element((By.XPATH, "//span[@class='spinner']")))
         self.browser.get(self.build_url())
 
     def export_leads(self):
