@@ -11,7 +11,7 @@ class ExportPage:
 
     def __init__(self, browser):
         self.browser = browser
-        self.wait = WebDriverWait(browser,360)
+        self.wait = WebDriverWait(browser, 360)
 
     def export_data(self):
         self.browser.get('https://lexmotion.pipedrive.com/settings/export')
@@ -19,7 +19,7 @@ class ExportPage:
         iframe = self.browser.find_element(By.XPATH, ExportPage.iframe_selector)
         self.browser.switch_to.frame(iframe)
 
-    def build_url(self):
+    def build_download_url(self):
         time.sleep(4)
         all_files = self.browser.find_elements(By.XPATH, "//table[@id='exports_list']//tr")
         last_record = all_files.pop()
@@ -28,7 +28,7 @@ class ExportPage:
 
     def export_data_file(self):
         self.wait.until(EC.invisibility_of_element((By.XPATH, "//span[@class='spinner']")))
-        self.browser.get(self.build_url())
+        self.browser.get(self.build_download_url())
 
     def export_leads(self):
         csv_button = self.browser.find_element(By.XPATH, ExportPage.csv_button_selector)
