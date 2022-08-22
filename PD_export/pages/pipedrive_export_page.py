@@ -88,3 +88,4 @@ class ExportPage:
         csv_button = self.browser.find_element(By.XPATH, ExportPage.csv_button_selector)
         csv_button.click()
         self.export_data_file()
+        time.sleep(60)
