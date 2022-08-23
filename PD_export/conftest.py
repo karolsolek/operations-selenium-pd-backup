@@ -12,6 +12,6 @@ def setup(request):
         request.cls.browser = browser
     except Exception as e:
         print(e)
-    finally:
+    finalll:
         yield
         browser.quit()
