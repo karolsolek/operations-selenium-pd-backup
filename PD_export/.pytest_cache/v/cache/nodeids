@@ -1,1 +1,3 @@
-[]
+[
+  "testcases/test_pd_import.py::TestDemoName::test_demo"
+]

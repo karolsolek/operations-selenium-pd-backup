@@ -1,3 +1,7 @@
+import sys
+import traceback
+
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 
 
@@ -6,9 +10,13 @@ class LoginPage:
         self.browser = browser
 
     def log_in(self, login, password):
-        login_input = self.browser.find_element(By.XPATH, " //input[@data-test='login']")
-        password_input = self.browser.find_element(By.XPATH, " //input[@data-test='password']")
-        login_button = self.browser.find_element(By.NAME, "submit")
-        login_input.send_keys(login)
-        password_input.send_keys(password)
-        login_button.click()
+        try:
+            login_input = self.browser.find_element(By.XPATH, " //input[@data-test='login']")
+            password_input = self.browser.find_element(By.XPATH, " //input[@data-test='password']")
+            login_button = self.browser.find_element(By.NAME, "submit")
+            login_input.send_keys(login)
+            password_input.send_keys(password)
+            login_button.click()
+        except NoSuchElementException:
+            print('Wrong page, correct field cannot be found')
+            sys.exit(1)

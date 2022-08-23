@@ -6,8 +6,12 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 @pytest.fixture(scope="class")
 def setup(request):
-    browser = webdriver.Chrome(ChromeDriverManager().install())
-    browser.get('https://lexmotion.pipedrive.com')
-    request.cls.browser = browser
-    yield
-    browser.quit()
+    try:
+        browser = webdriver.Chrome(ChromeDriverManager().install())
+        browser.get('https://lexmotion.pipedrive.com')
+        request.cls.browser = browser
+    except Exception as e:
+        print(e)
+    finally:
+        yield
+        browser.quit()
