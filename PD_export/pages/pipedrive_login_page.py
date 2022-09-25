@@ -11,9 +11,9 @@ class LoginPage:
 
     def log_in(self, login, password):
         try:
-            login_input = self.browser.find_element(By.XPATH, " //input[@data-test='login']")
-            password_input = self.browser.find_element(By.XPATH, " //input[@data-test='password']")
-            login_button = self.browser.find_element(By.NAME, "submit")
+            login_input = self.browser.find_element(By.XPATH, "//input[@id='login']")
+            password_input = self.browser.find_element(By.XPATH, "//input[@id='password']")
+            login_button = self.browser.find_element(By.XPATH, "//div[@class='login']//button")
             login_input.send_keys(login)
             password_input.send_keys(password)
             login_button.click()
