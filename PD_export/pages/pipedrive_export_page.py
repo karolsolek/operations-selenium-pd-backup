@@ -19,21 +19,32 @@ class ExportPage:
         iframe = self.browser.find_element(By.XPATH, ExportPage.iframe_selector)
         self.browser.switch_to.frame(iframe)
 
-    def build_download_url(self):
+    def build_download_url(self, function_name):
+        time.sleep(4)
+        all_files = self.browser.find_elements(By.XPATH, "//table[@id='exports_list']//tr")
+        last_record = all_files.pop()
+        last_record_number = last_record.text
+        if last_record_number.find("Failed") != -1:
+            eval(function_name + "()")
+        return "https://lexmotion.pipedrive.com/export/download/" + last_record_number[0:3]
+
+
+    def build_download_status_selector(self):
         time.sleep(4)
         all_files = self.browser.find_elements(By.XPATH, "//table[@id='exports_list']//tr")
         last_record = all_files.pop()
         last_record_number = last_record.text
         return "https://lexmotion.pipedrive.com/export/download/" + last_record_number[0:3]
 
-    def export_data_file(self):
+    def export_data_file(self, function_name):
+
         self.wait.until(EC.invisibility_of_element((By.XPATH, "//span[@class='spinner']")))
-        self.browser.get(self.build_download_url())
+        self.browser.get(self.build_download_url(function_name))
 
     def export_leads(self):
         csv_button = self.browser.find_element(By.XPATH, ExportPage.csv_button_selector)
         csv_button.click()
-        self.export_data_file()
+        self.export_data_file("export_leads()")
 
     def export_deals(self):
         iframe = self.browser.find_element(By.XPATH, ExportPage.iframe_selector)
@@ -42,7 +53,7 @@ class ExportPage:
         data_type_buttons[0].click()
         csv_button = self.browser.find_element(By.XPATH, ExportPage.csv_button_selector)
         csv_button.click()
-        self.export_data_file()
+        self.export_data_file(self, "export_deals")
 
     def export_organizations(self):
         iframe = self.browser.find_element(By.XPATH, ExportPage.iframe_selector)
